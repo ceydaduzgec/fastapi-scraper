@@ -34,9 +34,25 @@ Example output:
 
 Make sure the input of the `POST - /download` endpoint is properly validated and no malformed data is accepted. In case of errors or wrong input, return the appropriate HTTP code.
 
+### `GET - /download/<download_id>/status`
+
+This endpoint should accept a single parameter, the `download_id` (generated and returned by the `/download` endpoint). It returns information about the download process.
+
+Example output:
+
+```json
+    {
+        "download_id": "af0e49d5-45d5-4b74-8378-c86ff944809d",
+        "started_at": "2021-11-14T22:53:09.974195",
+        "finished_at": "2021-11-15T12:56:28.351382",
+        "status": "FINISHED",
+        "download_url": "http://localhost:5000/download/af0e49d5-45d5-4b74-8378-c86ff944809d"
+    }
+```
+
 ### `GET - /download/<download_id>`
 
-This endpoint should accept a single parameter, the `download_id` (generated and returned by the `/download` endpoint).
+This endpoint should accept a single parameter, the `download_id` (generated and returned by the `/download` endpoint). It returns the zip file.
 
 There should be 3 kinds of responses, since downloading images from a url could
 take a relatively long time:
@@ -62,6 +78,7 @@ There is also `docker-compose.yml` file included. We will use `docker-compose up
 * Modeling your download task objects that is stored in the database is highly recommended
 * If you use any additional library, don't forget to **include it in the `requirements.txt` file** (`docker-compose` actually uses it)
 * You can use `docker-compose up --build` command to test your own code. Go to `http://localhost:8000/docs` to see auto generated API documentation
+* You can add `progress` to download status endpoint as a bonus requirement
 
 ## Tools needed
 
@@ -75,7 +92,7 @@ There is also `docker-compose.yml` file included. We will use `docker-compose up
 Since the project scaffolding is ready-made you can solve the task by modifying
 only the following file:
 
- * `api/image-downloader.py` - `start_downloading_images` and `download_images` functions for their
+ * `api/image-downloader.py` - `start_downloading_images`, `get_download_status` and `download_images` functions for their
  respective endpoints
 
 However if you think the overall project structure or the structure of the

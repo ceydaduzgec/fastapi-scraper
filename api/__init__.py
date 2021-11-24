@@ -5,4 +5,4 @@ from .image_downloader import router as image_downloader_router
 
 api_router = APIRouter()
 api_router.include_router(example_router, prefix='/example')
-api_router.include_router(image_downloader_router, prefix='/image-downloader')
+api_router.include_router(image_downloader_router)
