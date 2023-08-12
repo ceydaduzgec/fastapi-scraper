@@ -3,16 +3,16 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.post('/download')
+@router.post('/downloads')
 async def start_downloading_images():
     pass
 
 
-@router.get('/download/{download_id}/status')
+@router.get('/downloads/{download_id}/status')
 async def get_download_status():
     pass
 
 
-@router.get('/download/{download_id}')
+@router.get('/downloads/{download_id}')
 async def download_images():
     pass

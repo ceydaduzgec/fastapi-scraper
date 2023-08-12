@@ -1,7 +1,8 @@
 
 # Mindsite Backend Developer Assignment
 
-In this assignment, you are given a FastAPI skeleton. You need to develop an api to download first **50** images (in .zip format) from a given website url.
+In this assignment, you are given a FastAPI skeleton. You need to develop an api to download images from a given website url and put them in .zip file.
+
 In order to do this you should implement a REST service that provides endpoints to initiate the process of downloading images and to download images when the process is done. **The process should not happen in the request handler!**
 
 We will provide you a function to fetch all image urls from a given url. You should use this function to get all image links from the url.
@@ -12,7 +13,7 @@ Please read this document before writing any code.
 
 We would like you to implement following endpoints.
 
-### `POST - /download`
+### `POST - /downloads`
 
 Example input:
 
@@ -22,7 +23,7 @@ Example input:
     }
 ```
 
-Calling this endpoint should initiate downloading images from the url. Then the endpoint should return a `download_id`, by which we can use to download the images or check the status of the process.
+Calling this endpoint should initiate downloading the zip file containing the images from the website. Then the endpoint should return a `download_id`, by which we can use to download the images or check the status of the process.
 
 Example output:
 
@@ -32,11 +33,11 @@ Example output:
     }
 ```
 
-Make sure the input of the `POST - /download` endpoint is properly validated and no malformed data is accepted. In case of errors or wrong input, return the appropriate HTTP code.
+Make sure the input of the `POST - /downloads` endpoint is properly validated and no malformed data is accepted. In case of errors or wrong input, return the appropriate HTTP code.
 
-### `GET - /download/<download_id>/status`
+### `GET - /downloads/<download_id>/status`
 
-This endpoint should accept a single parameter, the `download_id` (generated and returned by the `/download` endpoint). It returns information about the download process.
+This endpoint should accept a single parameter, the `download_id` (generated and returned by the `/downloads` endpoint). It returns information about the download process.
 
 Example output:
 
@@ -46,13 +47,13 @@ Example output:
         "started_at": "2021-11-14T22:53:09.974195",
         "finished_at": "2021-11-15T12:56:28.351382",
         "status": "FINISHED",
-        "download_url": "http://localhost:5000/download/af0e49d5-45d5-4b74-8378-c86ff944809d"
+        "download_url": "http://localhost:5000/downloads/af0e49d5-45d5-4b74-8378-c86ff944809d"
     }
 ```
 
-### `GET - /download/<download_id>`
+### `GET - /downloads/<download_id>`
 
-This endpoint should accept a single parameter, the `download_id` (generated and returned by the `/download` endpoint). It returns the zip file.
+This endpoint should accept a single parameter, the `download_id` (generated and returned by the `/downloads` endpoint). It returns the zip file.
 
 There should be 3 kinds of responses, since downloading images from a url could
 take a relatively long time:
@@ -70,6 +71,7 @@ There is also `docker-compose.yml` file included. We will use `docker-compose up
 
 ## Additional description and tips
 
+* Some websites could have more than 100+ image links, therefore you should limit the number of images to **50**
 * You should use a persistent data storage to store ongoing downloading processes. SQLite is sufficent but you can use other persistent databases such as PostgreSQL or Redis. If you use something other than SQLite, don't forget to include it in `docker-compose.yml`
 * To process images in the background, you can use asyncio or threads. (You can also use celery but it is not recommended because of additional complexity)
 * You can use local file system to store the images you downloaded
@@ -78,7 +80,7 @@ There is also `docker-compose.yml` file included. We will use `docker-compose up
 * Modeling your download task objects that is stored in the database is highly recommended
 * If you use any additional library, don't forget to **include it in the `requirements.txt` file** (`docker-compose` actually uses it)
 * You can use `docker-compose up --build` command to test your own code. Go to `http://localhost:8000/docs` to see auto generated API documentation
-* You can add `progress` to download status endpoint as a bonus requirement
+* You can add a `progress` field that shows the progress percentage of the download process to `GET /downloads/<download_id>/status` endpoint as a bonus requirement
 
 ## Tools needed
 

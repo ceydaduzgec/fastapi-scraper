@@ -1,21 +1,13 @@
-import asyncio
 from urllib.parse import urljoin
 from typing import List
 
 import aiohttp
-from aiohttp.client import request
+import requests
 from parsel import Selector
 
 
 class ScrapingException(Exception):
     pass
-
-
-def normalize_url(host: str, path: str) -> str:
-    """
-    Converts relative urls to absolute urls. Example: /image.png -> https://example.com/image.png
-    """
-    return urljoin(host, path)
 
 
 async def get_image_urls(url: str) -> List[str]:
@@ -33,7 +25,7 @@ async def get_image_urls(url: str) -> List[str]:
 
                 image_urls = html.css('img::attr(src)').getall()
 
-                return [normalize_url(host=url, path=image_url) for image_url in image_urls]
+                return [urljoin(base=url, url=image_url) for image_url in image_urls]
     except Exception as e:
         raise ScrapingException() from e
 
@@ -45,13 +37,13 @@ def get_image_urls_sync(url: str) -> List[str]:
     :raises ScrapingException: If any exception occurs, it is reraised as ScrapingException
     """
     try:
-        response = request.get(url)
+        response = requests.get(url)
         text = response.text
 
         html = Selector(text=text)
 
         image_urls = html.css('img::attr(src)').getall()
 
-        return [normalize_url(host=url, path=image_url) for image_url in image_urls]
+        return [urljoin(base=url, url=image_url) for image_url in image_urls]
     except Exception as e:
         raise ScrapingException() from e
