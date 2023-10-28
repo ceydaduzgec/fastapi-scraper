@@ -13,7 +13,7 @@ services:
     depends_on:
       - db
 
-  db:x
+  db:
     container_name: fastapi_scraper_db
     image: postgres:latest
     env_file:

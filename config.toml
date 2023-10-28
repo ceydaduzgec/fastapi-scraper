@@ -1,0 +1,15 @@
+[tool.isort]
+py_version=39
+profile = "black"
+line_length = 120
+skip_glob = [
+    "tools/*",
+]
+
+[tool.black]
+line-length = 120
+target-version = ['py39']
+force-exclude = '''(
+   tools/*
+)
+'''

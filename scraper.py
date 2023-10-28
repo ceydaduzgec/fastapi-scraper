@@ -1,5 +1,5 @@
-from urllib.parse import urljoin
 from typing import List
+from urllib.parse import urljoin
 
 import aiohttp
 import requests
@@ -23,7 +23,7 @@ async def get_image_urls(url: str) -> List[str]:
 
                 html = Selector(text=text)
 
-                image_urls = html.css('img::attr(src)').getall()
+                image_urls = html.css("img::attr(src)").getall()
 
                 return [urljoin(base=url, url=image_url) for image_url in image_urls]
     except Exception as e:
@@ -42,7 +42,7 @@ def get_image_urls_sync(url: str) -> List[str]:
 
         html = Selector(text=text)
 
-        image_urls = html.css('img::attr(src)').getall()
+        image_urls = html.css("img::attr(src)").getall()
 
         return [urljoin(base=url, url=image_url) for image_url in image_urls]
     except Exception as e:
