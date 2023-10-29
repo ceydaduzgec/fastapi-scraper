@@ -20,6 +20,7 @@ class Settings:
         "DATABASE_URL",
         f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}",
     )
+    DB_ECHO_LOG: bool = True if os.environ.get("DEBUG") == "True" else False
 
 
 settings = Settings()
