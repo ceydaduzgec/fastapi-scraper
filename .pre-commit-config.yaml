@@ -1,4 +1,4 @@
-exclude: migrations
+exclude: alembic
 repos:
 -   repo: https://github.com/pycqa/flake8
     rev: 6.1.0
