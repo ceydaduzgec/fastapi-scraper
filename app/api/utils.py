@@ -47,3 +47,15 @@ def get_image_urls_sync(url: str) -> List[str]:
         return [urljoin(base=url, url=image_url) for image_url in image_urls]
     except Exception as e:
         raise ScrapingException() from e
+
+
+def download_image(image_url):
+    pass
+
+
+def download_images():
+    pass
+
+
+def zip_images():
+    pass
