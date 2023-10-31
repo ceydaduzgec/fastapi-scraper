@@ -20,7 +20,8 @@
 - Add logging
 - Seperate production and development environments
 - `isort` and `pre-commit`` are working differently, need to fix it
-- `download_image` can be more efficient by using async I/O
+- `download_image` can be more efficient by using async I/O, `aiofiles`?
+- Maybe use `aiohttp` instead of `requests`?
 
 
 # References
