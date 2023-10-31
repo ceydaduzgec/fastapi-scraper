@@ -4,11 +4,8 @@ from urllib.parse import urljoin
 import aiohttp
 import requests
 from app.core.constants import MAX_IMAGE_NUMBER
+from app.core.exceptions import ScrapingException
 from parsel import Selector
-
-
-class ScrapingException(Exception):
-    pass
 
 
 async def get_image_urls(url: str) -> List[str]:

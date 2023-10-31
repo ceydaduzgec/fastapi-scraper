@@ -4,18 +4,20 @@ services:
 
   db:
     container_name: scraper_db
-    image: postgres
-    restart: always
+    image: postgres:latest
+    restart: on-failure
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - .data/db:/var/lib/postgresql/data
 
   pgadmin:
     container_name: scraper_pgadmin
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
@@ -23,18 +25,21 @@ services:
       - 5050:80
     depends_on:
       - db
+    volumes:
+      - pgadmin_data:/pgadmin
 
   app:
     container_name: scraper_app
     build: .
     tty: true
-    #command: bash -c "alembic upgrade head"
-    #  command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
     volumes:
-      - .:/app
+      - app_api:/app
     ports:
       - 8000:8000
     depends_on:
       - db
     restart: always
 
+volumes:
+  pgadmin_data:
+  app_api:

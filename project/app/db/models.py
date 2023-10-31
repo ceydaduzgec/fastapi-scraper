@@ -9,6 +9,7 @@ from sqlalchemy.sql import func
 class DownloadStatus(PyEnum):
     PENDING = "PENDING"
     DOWNLOADING = "DOWNLOADING"
+    ZIPPING = "ZIPPING"
     FINISHED = "FINISHED"
     ERROR = "ERROR"
 

@@ -14,6 +14,7 @@
     - cons: need to store progress on db
 
 - `update_download_task_fields`` aims to prevent unnecessary query, is it correct logic?
+- `ScrapingException(Exception)` or `ScrapingExceptionHandler(Exception)`?`
 
 # Enhancements
 
@@ -22,6 +23,7 @@
 - `isort` and `pre-commit`` are working differently, need to fix it
 - `download_image` can be more efficient by using async I/O, `aiofiles`?
 - Maybe use `aiohttp` instead of `requests`?
+- Fix `docker-compose` versions
 
 
 # References
@@ -37,8 +39,8 @@
 
 # Helper commands
 
-docker exec -ti scraper_app /bin/bash
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+dockuvicorn main:app --host 0.0.0.0 --port 8000 --reloader exec -ti scraper_app /bin/bash
+
 
 docker-compose run app alembic revision --autogenerate -m "New Migration"
 docker-compose run app alembic upgrade head

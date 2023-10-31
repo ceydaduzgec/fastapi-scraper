@@ -33,12 +33,12 @@ async def post_download_task(
     Example usage:
     ```python
     # POST request to create a new download task
-    url = {"download_url": "https://example.com/file.zip"}
+    url = {"download_url": "https://example.com"}
     response = post_download_task(url, background_tasks, db)
     ```
     """
     download_task = create_download_task(db, create_request.download_url)
-    background_tasks.add_task(download_and_zip_images_task, download_task.id, db)
+    background_tasks.add_task(download_and_zip_images_task, download_task.id, download_task.download_id, db)
     return download_task
 
 
