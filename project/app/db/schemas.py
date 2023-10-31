@@ -8,6 +8,9 @@ from pydantic import BaseModel, Field, HttpUrl
 class DownloadTaskCreate(BaseModel):
     download_url: HttpUrl = Field(example="https://www.youtube.com/")
 
+    class Config:
+        orm_mode = True
+
 
 class DownloadTaskStatus(BaseModel):
     download_id: UUID
@@ -24,3 +27,6 @@ class DownloadTaskStatus(BaseModel):
 
 class DownloadTaskResponse(BaseModel):
     download_id: UUID
+
+    class Config:
+        orm_mode = True

@@ -1,6 +1,10 @@
 
 # Notes
 
+- I didn't want to expose id that I use in the db hence id and download_id are different
+
+# Questions
+- db: Session = Depends(get_db) Dependency Injection ?????
 - Which would be better: store progress on db or calculate on the fly? pros and cons?
   - calculate on the fly:
     - pros: no need to store progress on db
@@ -9,10 +13,14 @@
     - pros: if the server is restarted, the progress is not lost
     - cons: need to store progress on db
 
+- `update_download_task_fields`` aims to prevent unnecessary query, is it correct logic?
+
 # Enhancements
 
 - Add logging
 - Seperate production and development environments
+- `isort` and `pre-commit`` are working differently, need to fix it
+- `download_image` can be more efficient by using async I/O
 
 
 # References
@@ -24,7 +32,7 @@
 
 - https://dev.to/tiangolo
 - https://christophergs.com/python/2021/06/16/python-flask-fastapi/ --> Read more
-
+- https://github.com/sqlalchemy/alembic/issues/278 --> Still issue?
 
 # Helper commands
 

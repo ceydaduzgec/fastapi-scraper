@@ -2,8 +2,7 @@ import uuid
 from enum import Enum as PyEnum
 
 from app.db.database import Base
-from sqlalchemy import Column, DateTime, Enum, Float, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, DateTime, Enum, Float, Integer, String
 from sqlalchemy.sql import func
 
 
@@ -25,14 +24,3 @@ class DownloadTask(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now(), index=True)
     started_at = Column(DateTime(timezone=True))
     finished_at = Column(DateTime(timezone=True))
-
-    images = relationship("Image", back_populates="task")
-
-
-class Image(Base):
-    __tablename__ = "images"
-
-    id = Column(Integer, primary_key=True, index=True)
-    filename = Column(String, index=True, nullable=False)
-    download_task_id = Column(Integer, ForeignKey("download_tasks.id"), index=True)
-    task = relationship("DownloadTask", back_populates="images")  # Add this line
