@@ -1,17 +1,20 @@
 import datetime
 from uuid import UUID, uuid4
 
+from app.api_v1.tasks import download_images_task
 from app.db.database import get_db
 from app.db.models import DownloadStatus, DownloadTask
 from app.db.schemas import DownloadTaskCreate, DownloadTaskResponse, DownloadTaskStatus
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 router = APIRouter()
 
 
 @router.post("/downloads", response_model=DownloadTaskResponse)
-async def start_downloading_images(url: DownloadTaskCreate, db: Session = Depends(get_db)):
+async def post_download_task(
+    url: DownloadTaskCreate, background_tasks: BackgroundTasks, db: Session = Depends(get_db)
+) -> DownloadTaskResponse:
     download_id = uuid4()
     download_task = DownloadTask(
         download_id=str(download_id),
@@ -23,12 +26,13 @@ async def start_downloading_images(url: DownloadTaskCreate, db: Session = Depend
     db.add(download_task)
     db.commit()
     db.refresh(download_task)
-    # start_download_task(download_task)
+    background_tasks.add_task(download_images_task, download_task.id, db)
+
     return {"download_id": download_id}
 
 
 @router.get("/downloads/{download_id}/status", response_model=DownloadTaskStatus)
-async def get_download_status(download_id: UUID, db: Session = Depends(get_db)):
+async def get_download_status(download_id: UUID, db: Session = Depends(get_db)) -> DownloadTaskStatus:
     download_task = db.query(DownloadTask).filter(DownloadTask.download_id == str(download_id)).first()
     if not download_task:
         raise HTTPException(status_code=404, detail="Download URL not found")
@@ -36,5 +40,5 @@ async def get_download_status(download_id: UUID, db: Session = Depends(get_db)):
 
 
 @router.get("/downloads/{download_id}", response_model=DownloadTaskResponse)
-async def download_images():
-    return {"message": "Not implemented yet"}, 501
+async def get_downloaded_images(download_id: UUID) -> DownloadTaskResponse:
+    raise HTTPException(status_code=501, detail="Not implemented")

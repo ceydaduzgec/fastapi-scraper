@@ -2,11 +2,11 @@ from datetime import datetime
 from uuid import UUID
 
 from app.db.models import DownloadStatus
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class DownloadTaskCreate(BaseModel):
-    download_url: HttpUrl
+    download_url: HttpUrl = Field(example="https://www.youtube.com/")
 
 
 class DownloadTaskStatus(BaseModel):

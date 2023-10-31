@@ -1,5 +1,5 @@
 
-# Mindsite Backend Developer Assignment
+# FastAPI Image Downloader
 
 In this assignment, you are given a FastAPI skeleton. You need to develop an api to download images from a given website url and put them in .zip file.
 
@@ -107,9 +107,3 @@ function in `scraper.py` called `get_image_urls_sync`
 **We’ve deliberately left the specific implementation details out - we want to
 give you space to be creative with your approach to the problem, and impress us
 with your skills and experience.**
-
-Lastly, even if you think your solution is not 100% complete. Please send us your work.
-If you are stuck or didn't understand the requirements, feel free to contact us on
-**hakan@themindsite.com**
-
-Good Luck!
