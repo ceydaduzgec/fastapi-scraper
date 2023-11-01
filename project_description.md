@@ -58,21 +58,23 @@ This endpoint should accept a single parameter, the `download_id` (generated and
 There should be 3 kinds of responses, since downloading images from a url could
 take a relatively long time:
 
- * The zip file - in case the downloading finished and images are ready
- * Appropriate HTTP response indicating that the downloading of images is not finished yet
- * Appropriate HTTP response indicating that some kind of error occurred while downloading images
+* The zip file - in case the downloading finished and images are ready
+* Appropriate HTTP response indicating that the downloading of images is not finished yet
+* Appropriate HTTP response indicating that some kind of error occurred while downloading images
 
 
 ## Skeleton project
 
-For this task, we provide you FastAPI project that has 1 example REST endpoint along with its Dockerfile. Example router and image downloader (you should write endpoints code there) are included in the `api` directory.
+For this task, we provide you FastAPI project that has 1 example REST endpoint along with its Dockerfile. Example router and image downloader
+(you should write endpoints code there) are included in the `api` directory.
 In `scraper.py`, you should use `get_image_urls` function to fetch image_urls from the given url.
 There is also `docker-compose.yml` file included. We will use `docker-compose up --build` command to run your project.
 
 ## Additional description and tips
 
 * Some websites could have more than 100+ image links, therefore you should limit the number of images to **50**
-* You should use a persistent data storage to store ongoing downloading processes. SQLite is sufficent but you can use other persistent databases such as PostgreSQL or Redis. If you use something other than SQLite, don't forget to include it in `docker-compose.yml`
+* You should use a persistent data storage to store ongoing downloading processes. SQLite is sufficent but you can use other persistent databases such as PostgreSQL or Redis.
+If you use something other than SQLite, don't forget to include it in `docker-compose.yml`
 * To process images in the background, you can use asyncio or threads. (You can also use celery but it is not recommended because of additional complexity)
 * You can use local file system to store the images you downloaded
 * Typing your code is recommended but not mandatory
@@ -94,8 +96,8 @@ There is also `docker-compose.yml` file included. We will use `docker-compose up
 Since the project scaffolding is ready-made you can solve the task by modifying
 only the following file:
 
- * `api/image-downloader.py` - `start_downloading_images`, `get_download_status` and `download_images` functions for their
- respective endpoints
+* `api/image-downloader.py` - `start_downloading_images`, `get_download_status` and `download_images` functions for their
+respective endpoints
 
 However if you think the overall project structure or the structure of the
 Python applications can be improved, please do so.

@@ -1,4 +1,4 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8-slim
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
 ENV PYTHONUNBUFFERED=1
 # RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
 ENV PYTHONUNBUFFERED=1

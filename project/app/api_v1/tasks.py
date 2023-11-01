@@ -10,11 +10,12 @@ from sqlalchemy.orm import Session
 logger = logging.getLogger(__name__)
 
 
-async def download_and_zip_images_task(id: str, db: Session):
+async def download_and_zip_images_task(id: str, db: Session) -> None:
     """
     :param url: URL of the website to scrape
     :param download_id: Unique id for download process
     """
+
     unique_download_folder = f"{settings.DOWNLOAD_PATH}/{id}/"
     try:
         await download_images(db, id, unique_download_folder)
@@ -22,6 +23,7 @@ async def download_and_zip_images_task(id: str, db: Session):
     except Exception as e:
         logger.error(e)
         update_fields = {"status": DownloadStatus.ERROR, "finished_at": datetime.now()}
+
         update_download_task_fields(db, id, update_fields)
     else:
         update_fields = {"status": DownloadStatus.FINISHED, "finished_at": datetime.now()}

@@ -32,7 +32,7 @@ async def post_download_task(
         download_id: UUID of the newly created download task.
     """
     download_task = create_download_task(db, create_request.download_url)
-    background_tasks.add_task(download_and_zip_images_task, download_task.download_id, db)
+    background_tasks.add_task(download_and_zip_images_task, download_task.id, db)
     return download_task
 
 

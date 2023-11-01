@@ -8,18 +8,19 @@ from app.api_v1.scraper import get_image_urls
 from app.core.exceptions import DownloadTaskNotFoundException, FileNotFoundException
 from app.db.crud import get_download_task, update_download_task_fields
 from app.db.models import DownloadStatus
+from sqlalchemy.orm import Session
 
 logger = logging.getLogger(__name__)
 
 
-def calculate_progress(downloaded, total):
+def calculate_progress(downloaded: int, total: int) -> float:
     if total == 0:
         return 0.0
     progress = (downloaded / total) * 100.0
     return round(progress, 1)
 
 
-def download_image(image_url, download_folder):  # TODO this can be async
+def download_image(image_url: str, download_folder: str) -> None:  # TODO this can be async
     try:
         response = requests.get(image_url)
         response.raise_for_status()
@@ -31,7 +32,7 @@ def download_image(image_url, download_folder):  # TODO this can be async
         logger.error(f"Failed to download image from {image_url}: {str(e)}")
 
 
-async def download_images(db, id, download_folder):
+async def download_images(db: Session, id: int, download_folder: str) -> None:
     try:
         download_task = get_download_task(db, "id", id)
     except Exception:
@@ -54,7 +55,7 @@ async def download_images(db, id, download_folder):
         download_image(image_url, download_folder)
 
 
-async def zip_images(db, id, download_folder):
+async def zip_images(db, id: int, download_folder: str) -> None:
     download_task = get_download_task(db, "id", id)
     file_paths = [
         os.path.join(folderName, f_name)

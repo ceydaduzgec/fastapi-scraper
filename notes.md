@@ -4,7 +4,8 @@
 - I didn't want to expose id that I use in the db hence id and download_id are different
 
 # Questions
-- db: Session = Depends(get_db) Dependency Injection ?????
+
+- db: Session = Depends(get_db) Dependency Injection?
 - Which would be better: store progress on db or calculate on the fly? pros and cons?
   - calculate on the fly:
     - pros: no need to store progress on db
@@ -18,7 +19,6 @@
 - `schemas.py` might be better to be in `api` folder?
 - `get_zip_file` can be async?`
 
-
 # Enhancements
 
 - Add logging
@@ -30,6 +30,8 @@
 - Exception handling needs more testing
 - Change `os` file read system to a suitable I/O system for production
 - Use `UNIQUE_DOWNLOAD_FOLDER` instead of hardcoding.
+- Get rid of `Enable tracemalloc to get the object allocation traceback` warning for tests
+- Add more tests to increase coverage to 90%
 
 # References
 
@@ -49,3 +51,12 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 docker-compose run app alembic revision --autogenerate -m "New Migration"
 docker-compose run app alembic upgrade head
+
+pip install fastapi fastapi-sqlalchemy pydantic alembic psycopg2 uvicorn python-dotenv
+
+# Test URLs
+
+-
+- https://bitestreams.com/blog/fastapi_sqlalchemy/
+- https://christophergs.com/python/2021/06/16/python-flask-fastapi
+- https://docs.sqlalchemy.org/en/14/errors.html#error-9h9h

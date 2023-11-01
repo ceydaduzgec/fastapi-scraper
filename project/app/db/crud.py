@@ -58,6 +58,7 @@ def update_download_task_fields(db: Session, download_task_or_id, update_fields:
     Raises:
         ValueError: If no record is found with the given id.
     """
+
     if isinstance(download_task_or_id, int):
         # If id is provided, query the database to get the DownloadTask instance
         download_task = get_download_task(db, "id", download_task_or_id)
