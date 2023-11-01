@@ -1,6 +1,7 @@
 import datetime
 from uuid import uuid4
 
+from app.core.exceptions import DownloadTaskNotFoundException
 from app.db.models import DownloadStatus, DownloadTask
 from sqlalchemy.orm import Session
 
@@ -20,11 +21,6 @@ def create_download_task(db: Session, download_url: str) -> DownloadTask:
     download URL and sets its initial status to PENDING. It records the
     starting and finishing times as `datetime.datetime.min`, and then returns
     the created download task.
-
-    Example usage:
-
-    download_url = "https://youtube.com"
-    created_task = create_download_task(db_session, download_url)
     """
     download_task = DownloadTask(
         download_id=str(uuid4()),
@@ -37,6 +33,13 @@ def create_download_task(db: Session, download_url: str) -> DownloadTask:
     db.commit()
     db.refresh(download_task)
 
+    return download_task
+
+
+def get_download_task(db: Session, filter_field, filter_value) -> DownloadTask:
+    download_task = db.query(DownloadTask).filter(getattr(DownloadTask, filter_field) == filter_value).first()
+    if not download_task:
+        raise DownloadTaskNotFoundException(f"No record found with {filter_field} = {filter_value}")
     return download_task
 
 
@@ -57,10 +60,7 @@ def update_download_task_fields(db: Session, download_task_or_id, update_fields:
     """
     if isinstance(download_task_or_id, int):
         # If id is provided, query the database to get the DownloadTask instance
-        download_task = db.query(DownloadTask).filter(DownloadTask.id == download_task_or_id).first()
-
-        if not download_task:
-            raise ValueError(f"No record found with id = {download_task_or_id}")
+        download_task = get_download_task(db, "id", download_task_or_id)
     else:
         # If a DownloadTask instance is provided, use it directly
         download_task = download_task_or_id

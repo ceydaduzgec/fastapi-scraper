@@ -7,9 +7,9 @@ class ScrapingException(BaseException):
     pass
 
 
-class NoFilesException(BaseException):
+class FileNotFoundException(BaseException):
     pass
 
 
-class TaskNotFoundException(BaseException):
+class DownloadTaskNotFoundException(BaseException):
     pass

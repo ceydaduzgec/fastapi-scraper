@@ -15,6 +15,9 @@
 
 - `update_download_task_fields`` aims to prevent unnecessary query, is it correct logic?
 - `ScrapingException(Exception)` or `ScrapingExceptionHandler(Exception)`?`
+- `schemas.py` might be better to be in `api` folder?
+- `get_zip_file` can be async?`
+
 
 # Enhancements
 
@@ -24,7 +27,9 @@
 - `download_image` can be more efficient by using async I/O, `aiofiles`?
 - Maybe use `aiohttp` instead of `requests`?
 - Fix `docker-compose` versions
-
+- Exception handling needs more testing
+- Change `os` file read system to a suitable I/O system for production
+- Use `UNIQUE_DOWNLOAD_FOLDER` instead of hardcoding.
 
 # References
 
@@ -39,8 +44,8 @@
 
 # Helper commands
 
-dockuvicorn main:app --host 0.0.0.0 --port 8000 --reloader exec -ti scraper_app /bin/bash
-
+docker exec -ti scraper_app /bin/bash
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 docker-compose run app alembic revision --autogenerate -m "New Migration"
 docker-compose run app alembic upgrade head
