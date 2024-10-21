@@ -34,7 +34,7 @@ starlette==0.19.0
 uvicorn==0.14.0
 
 # Utility Libraries and Tools
-black==21.6b0
+black==24.3.0
 click==8.0.1
 colorama==0.4.4
 distlib==0.3.2
