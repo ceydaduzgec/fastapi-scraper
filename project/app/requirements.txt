@@ -1,5 +1,5 @@
 # Web Frameworks and Networking
-aiohttp==3.8.2
+aiohttp==3.10.2
 aiofiles==23.2.1
 yarl==1.8.1
 frozenlist==1.3.1
