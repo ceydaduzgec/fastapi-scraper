@@ -23,7 +23,7 @@ psycopg2-binary==2.9.9
 alembic==1.6.5
 FastAPI-SQLAlchemy==0.2.1
 SQLAlchemy==1.4.19
-pydantic==1.10.0a1
+pydantic==1.10.13
 
 # API and Web Framework Utilities
 appdirs==1.4.4
